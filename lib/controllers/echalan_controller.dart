@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 
 Future<String> generateAndDownloadPDF() async {
-  final url = Uri.parse('http://localhost:3000/generate-pdf'); // Change to your API URL
+  final url = Uri.parse('https://gen-challan.onrender.com/generate-pdf');
   final Map<String, dynamic> requestBody = {
     "deliveryChallanFor": "Order 123",
     "shipperName": "ABC Logistics",
@@ -34,13 +34,12 @@ Future<String> generateAndDownloadPDF() async {
     );
 
     if (response.statusCode == 200) {
-      // Get the directory to save the PDF
       final directory = await getApplicationDocumentsDirectory();
       final filePath = '${directory.path}/generated_document.pdf';
 
-      // Save the PDF file
       final file = File(filePath);
       await file.writeAsBytes(response.bodyBytes);
+      print(filePath);
 
       return "PDF successfully saved at: $filePath";
     } else {

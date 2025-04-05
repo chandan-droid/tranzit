@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ttranzit_app/screens/owner_view/tabs/add_vehicle.dart';
-import 'package:ttranzit_app/screens/owner_view/tabs/job_details.dart';
 
 import 'package:ttranzit_app/screens/owner_view/tabs/owner_home_tab.dart';
 import 'package:ttranzit_app/screens/owner_view/tabs/trip_details.dart';
-import 'package:ttranzit_app/screens/shipper_view/tabs/add_job_tab.dart';
 import 'package:ttranzit_app/screens/shipper_view/tabs/profile_tab.dart';
-import 'package:ttranzit_app/screens/shipper_view/tabs/trip_tab.dart';
 
 class OwnerTabView extends StatefulWidget {
   final int givenIndex;
@@ -96,7 +93,7 @@ class _OwnerTabViewState extends State<OwnerTabView> {
                                   AssetImage("assets/icons/trip_car.png")),
                             ),
                           ),
-                    label: 'Job'),
+                    label: 'Trip'),
                 BottomNavigationBarItem(
                     icon: _selectedIndex == 2
                         ? Padding(
@@ -116,7 +113,7 @@ class _OwnerTabViewState extends State<OwnerTabView> {
                                   AssetImage("assets/icons/add_vehicle.png")),
                             ),
                           ),
-                    label: 'Trip'),
+                    label: 'Vehicle'),
                 BottomNavigationBarItem(
                     icon: _selectedIndex == 3
                         ? Padding(

@@ -14,8 +14,8 @@ class MapScreen extends StatelessWidget {
       appBar: AppBar(title: Text("Location on Map")),
       body: FlutterMap(
         options: MapOptions(
-          center: LatLng(latitude, longitude),
-          zoom: 14.0,
+          initialCenter: LatLng(latitude, longitude),
+          initialZoom: 14.0,
         ),
         children: [
           TileLayer(

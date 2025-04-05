@@ -126,7 +126,7 @@ class _HomeTabState extends State<HomeTab> {
                   itemBuilder: (context, index) {
                     var truck = truckController.trucks[index];
                     return _truckItem(
-                      truck['capacity'].toString(),
+                      truck['loadCapacity'].toString(),
                       truck['fuelType'] ?? "Unknown",
                       truck['model'] ?? "Unknown",
                       truck['imagePath'] ?? "assets/images/vehicle_2.png",

@@ -24,27 +24,25 @@ class AuthController extends GetxController{
     super.onReady();
     _user.value = auth.currentUser;
     _user.bindStream(auth.userChanges());
-    ever(_user, _setInitialScreen); // Listen for changes to the user
+    ever(_user, _setInitialScreen);
   }
 
   _setInitialScreen(User? user) async {
     if (user == null) {
       Get.offAll(() => RoleSelectionScreen());
     } else {
-      // Check if user exists in the "shippers" collection
       DocumentSnapshot shipperDoc = await firestore.collection('shippers').doc(user.uid).get();
 
       if (shipperDoc.exists) {
         Get.offAll(() => ShipperTabView(givenIndex: 0));
-        return; // Exit function after routing
+        return;
       }
 
-      // Check if user exists in the "owners" collection
       DocumentSnapshot ownerDoc = await firestore.collection('owners').doc(user.uid).get();
 
       if (ownerDoc.exists) {
         Get.offAll(() => OwnerTabView(givenIndex: 0));
-        return; // Exit function after routing
+        return;
       }
 
       // If user is not found in either collection
@@ -60,7 +58,7 @@ class AuthController extends GetxController{
       User? user = userCredential.user;
 
       if (user != null) {
-        await firestore.collection('users').doc(user.uid).set({
+        await firestore.collection('shippers').doc(user.uid).set({
           'uid': user.uid,
           'name': name,
           'email': email,
@@ -69,6 +67,7 @@ class AuthController extends GetxController{
           'country':country,
           'address': address,
           'gstNo':gstNo,
+          'role': 'shipper',
           'createdAt': FieldValue.serverTimestamp(),
         });
         print("User signed up: ${user.email}");

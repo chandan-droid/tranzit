@@ -10,8 +10,6 @@ class TruckController extends GetxController {
   var trucks = <Map<String, dynamic>>[].obs;
   var driverLicenseImage = Rx<File?>(null);
   var vehicleImage = Rx<File?>(null);
-  final FirebaseStorage _storage = FirebaseStorage.instance;
-
   final ImagePicker _picker = ImagePicker();
 
   @override
@@ -63,9 +61,9 @@ class TruckController extends GetxController {
     }
   }
   void fetchTrucks() {
-    FirebaseFirestore.instance.collection('Vehicle').snapshots().listen((snapshot) async {
+    FirebaseFirestore.instance.collection('vehicles').snapshots().listen((snapshot) async {
       try {
-        var snapshot = await FirebaseFirestore.instance.collection('Vehicle').get();
+        var snapshot = await FirebaseFirestore.instance.collection('vehicles').get();
         trucks.assignAll(snapshot.docs.map((doc) => doc.data()).toList());
         print("Fetched trucks: ${trucks}");
       } catch (e) {
@@ -77,7 +75,7 @@ class TruckController extends GetxController {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       driverLicenseImage = File(pickedFile.path) as Rx<File?>;
-      update(); // Update GetX UI
+      update();
     }
   }
 
@@ -86,18 +84,6 @@ class TruckController extends GetxController {
     if (pickedFile != null) {
       vehicleImage = File(pickedFile.path) as Rx<File?>;
       update();
-    }
-  }
-  Future<String> _uploadImage(File imageFile, String folder) async {
-    try {
-      String fileName = "${DateTime.now().millisecondsSinceEpoch}.jpg";
-      Reference ref = _storage.ref().child("$folder/$fileName");
-      UploadTask uploadTask = ref.putFile(imageFile);
-      TaskSnapshot snapshot = await uploadTask;
-      return await snapshot.ref.getDownloadURL();
-    } catch (e) {
-      print("Error uploading image: $e");
-      return "";
     }
   }
 }

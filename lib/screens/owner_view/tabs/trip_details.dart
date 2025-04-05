@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ttranzit_app/commons/widgets/constants.dart';
+import '../../../controllers/echalan_controller.dart';
 import '../../../controllers/trip_controller.dart';
 
 class OwnerTripTab extends StatelessWidget {
@@ -80,7 +82,6 @@ class OwnerTripTab extends StatelessWidget {
     );
   }
 
-  /// ✅ **Trip Card UI**
   Widget _buildTripCard(Map<String, dynamic> trip, int index) {
     return Obx(() {
       bool isExpanded = tripController.isExpandedList[index];
@@ -129,7 +130,22 @@ class OwnerTripTab extends StatelessWidget {
                     _infoText("Vehicle Number", trip['vehicleNumber'] ?? "N/A"),
                     _infoText("Payment Status", trip['paymentStatus'] ?? "Pending"),
                     SizedBox(height: 10),
-                    _actionButton("E-challan", GlobalVariables.secondaryColor1),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: GlobalVariables.secondaryColor1,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      ),
+                      onPressed:
+                        () async {
+                          String result = await generateAndDownloadPDF();
+                          Get.snackbar("", result,duration: Duration(seconds: 7));
+                        },
+
+                      child: Text(
+                        "E-challan",
+                        style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.white),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -149,17 +165,4 @@ class OwnerTripTab extends StatelessWidget {
     );
   }
 
-  Widget _actionButton(String text, Color color) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: color,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      ),
-      onPressed: () {},
-      child: Text(
-        text,
-        style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.white),
-      ),
-    );
-  }
 }

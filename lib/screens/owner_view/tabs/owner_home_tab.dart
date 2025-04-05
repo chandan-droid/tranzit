@@ -94,8 +94,7 @@ class _OwnerHomeTabState extends State<OwnerHomeTab> {
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: MiniMapWidget(
-                latitude: trackingController.latitude.value,
-                longitude: trackingController.longitude.value,
+                  latitude: 22.5726, longitude: 88.3639
               ),
             ),
             SizedBox(height: 20),

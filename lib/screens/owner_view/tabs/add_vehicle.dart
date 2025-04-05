@@ -61,7 +61,7 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                   _submitForm();
                 },
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                  padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
                   child: Text(
                     "Add Vehicle",
                     style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white),
@@ -154,27 +154,6 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
             .map((item) => DropdownMenuItem(value: item, child: Text(item)))
             .toList(),
         onChanged: (value) {},
-      ),
-    );
-  }
-
-  Widget _buildFileUploadButton(String label) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 8),
-      child: ElevatedButton.icon(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.white,
-          side: BorderSide(color: Colors.amber.shade700),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        ),
-        onPressed: () {
-          print("Upload file for $label");
-        },
-        icon: Icon(Icons.link, color: Colors.amber.shade700),
-        label: Text(
-          label,
-          style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.amber.shade700),
-        ),
       ),
     );
   }
